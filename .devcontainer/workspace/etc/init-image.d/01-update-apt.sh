@@ -1,0 +1,11 @@
+# Get the tools we need to add additional APT sources.
+apt-get update
+apt-get install -y --no-install-recommends \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gpg \
+    lsb-release
+
+# Make a place to store our keyrings.
+mkdir -p /usr/local/share/keyrings

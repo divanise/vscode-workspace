@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+
+  vscode-workspace:
+    image: vscode-workspace
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - config-data:/home/vscode/.config
+      - ..:/home/vscode/workspace:cached
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # Configuration details: https://hub.docker.com/_/postgres
+  postgres:
+    image: postgres:16.2
+    restart: unless-stopped
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_USER: vscode
+      POSTGRES_PASSWORD: vscode_postgres_pass
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres/postgresql-initdb.d:/docker-entrypoint-initdb.d:ro
+      - postgres-data:/var/lib/postgresql/data
+
+  # Configuration details: https://hub.docker.com/_/redis
+  redis:
+    image: redis:7.2.4
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+
+volumes:
+  config-data:
+  postgres-data:
+  redis-data:

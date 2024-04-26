@@ -1,0 +1,29 @@
+{
+    "name": "VSCode Workspace",
+
+    "dockerComposeFile": [
+        "docker-compose.yml"
+    ],
+
+    "service": "vscode-workspace",
+
+    "workspaceFolder": "/home/vscode/workspace",
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+            },
+
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "pdconsec.vscode-print"
+            ]
+        }
+    },
+
+    "remoteUser": "vscode",
+
+    "postCreateCommand": ["/usr/bin/bash", "-e", "-o", "pipefail", "/usr/local/bin/run-scripts", "/usr/local/etc/post-create.d"],
+    "postStartCommand":  ["/usr/bin/bash", "-e", "-o", "pipefail", "/usr/local/bin/run-scripts", "/usr/local/etc/post-start.d"],
+    "postAttachCommand": ["/usr/bin/bash", "-e", "-o", "pipefail", "/usr/local/bin/run-scripts", "/usr/local/etc/post-attach.d"]
+}
