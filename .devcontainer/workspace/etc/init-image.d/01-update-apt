@@ -1,3 +1,7 @@
+#!/usr/bin/bash
+
+set -euo pipefail
+
 # Get the tools we need to add additional APT sources.
 apt-get update
 apt-get install -y --no-install-recommends \

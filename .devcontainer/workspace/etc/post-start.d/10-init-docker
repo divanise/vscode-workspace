@@ -1,3 +1,7 @@
+#!/usr/bin/bash
+
+set -euo pipefail
+
 sudo chown :docker /var/run/docker.sock
 sudo chmod ug=rw,o= /var/run/docker.sock
 

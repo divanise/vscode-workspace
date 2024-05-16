@@ -21,10 +21,9 @@ SHELL ["/usr/bin/bash", "-e", "-o", "pipefail", "-c"]
 #
 # Run the image initialization scripts.
 #
-COPY workspace/bin/run-scripts      /usr/local/bin
 COPY workspace/etc/init-image.d/    /usr/local/etc/init-image.d/
 
-RUN source /usr/local/bin/run-scripts /usr/local/etc/init-image.d
+RUN run-parts /usr/local/etc/init-image.d
 
 #
 # Add a non-root user.
@@ -54,7 +53,7 @@ USER ${USER_UID}
 #
 COPY workspace/etc/init-user.d/     /usr/local/etc/init-user.d/
 
-RUN source /usr/local/bin/run-scripts /usr/local/etc/init-user.d
+RUN run-parts /usr/local/etc/init-user.d
 
 #
 # Copy the container initialization scripts.

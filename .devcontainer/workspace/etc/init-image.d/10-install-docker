@@ -1,3 +1,7 @@
+#!/usr/bin/bash
+
+set -euo pipefail
+
 # Add Docker to the APT source list.
 # https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg \

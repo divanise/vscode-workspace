@@ -1,3 +1,7 @@
+#!/usr/bin/bash
+
+set -euo pipefail
+
 # Install utilities.
 apt-get install -y --no-install-recommends \
     bind9-host \

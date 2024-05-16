@@ -26,7 +26,7 @@
 
     "remoteUser": "vscode",
 
-    "postCreateCommand": ["/usr/bin/bash", "-e", "-o", "pipefail", "/usr/local/bin/run-scripts", "/usr/local/etc/post-create.d"],
-    "postStartCommand":  ["/usr/bin/bash", "-e", "-o", "pipefail", "/usr/local/bin/run-scripts", "/usr/local/etc/post-start.d"],
-    "postAttachCommand": ["/usr/bin/bash", "-e", "-o", "pipefail", "/usr/local/bin/run-scripts", "/usr/local/etc/post-attach.d"]
+    "postCreateCommand": ["run-parts", "/usr/local/etc/post-create.d"],
+    "postStartCommand":  ["run-parts", "/usr/local/etc/post-start.d"],
+    "postAttachCommand": ["run-parts", "/usr/local/etc/post-attach.d"]
 }

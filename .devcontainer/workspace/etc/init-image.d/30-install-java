@@ -1,3 +1,7 @@
+#!/usr/bin/bash
+
+set -euo pipefail
+
 # Based on https://github.com/adoptium/containers/blob/main/21/jdk/ubuntu/jammy/Dockerfile
 
 WORK_DIR="$(mktemp -d)"
@@ -35,4 +39,3 @@ tar --extract \
 
 popd
 rm -rf "${WORK_DIR}"
-unset WORK_DIR
