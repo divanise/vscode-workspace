@@ -5,6 +5,7 @@ set -euo pipefail
 # Install utilities.
 apt-get install -y --no-install-recommends \
     bind9-host \
+    bsdextrautils \
     bzip2 \
     dirmngr \
     dnsutils \
