@@ -19,6 +19,11 @@ ENV \
 SHELL ["/usr/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 #
+# Initialize APT.
+#
+RUN apt-get update
+
+#
 # Run the image initialization scripts.
 #
 COPY etc/init-image.d/    /usr/local/etc/init-image.d/
@@ -54,6 +59,13 @@ USER ${USER_UID}
 COPY etc/init-user.d/     /usr/local/etc/init-user.d/
 
 RUN run-parts /usr/local/etc/init-user.d
+
+#
+# Clean up APT.
+#
+RUN \
+    sudo apt-get clean && \
+    sudo rm -rf /var/lib/apt/lists
 
 #
 # Copy the container initialization scripts.
