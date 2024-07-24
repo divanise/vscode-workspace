@@ -45,24 +45,14 @@ RUN \
 
 COPY --chown=${USERNAME}:${USERNAME} home /home/${USERNAME}
 
+USER ${USER_UID}
+
 #
 # Run the image initialization scripts.
 #
 COPY etc/init-image.d/    /usr/local/etc/init-image.d/
 
 RUN run-parts /usr/local/etc/init-image.d
-
-#
-# Run the remainder of the setup as the user.
-#
-USER ${USER_UID}
-
-#
-# Run the user initialization scripts.
-#
-COPY etc/init-user.d/     /usr/local/etc/init-user.d/
-
-RUN run-parts /usr/local/etc/init-user.d
 
 #
 # Clean up APT.
