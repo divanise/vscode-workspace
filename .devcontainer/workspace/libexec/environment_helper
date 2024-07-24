@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+set -euo pipefail
+
+cat /usr/local/etc/environment.d/* | tr '\n' ';' | sed s/\;\;/\;/g

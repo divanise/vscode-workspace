@@ -43,13 +43,6 @@ RUN \
     echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} && \
     chmod 0440 /etc/sudoers.d/${USERNAME}
 
-COPY --chown=${USERNAME}:${USERNAME} home /home/${USERNAME}
-
-#
-# Copy our utilities.
-#
-COPY bin/                   /usr/local/bin/
-
 #
 # Set up our environment variable directory.
 #
@@ -102,6 +95,16 @@ RUN run-parts --regex '^9'  /usr/local/etc/init-image.d/
 RUN \
     sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists
+#
+# Copy our home directory template.
+#
+COPY --chown=${USERNAME}:${USERNAME} home /home/${USERNAME}
+
+#
+# Copy our utility directories.
+#
+COPY bin/                   /usr/local/bin/
+COPY libexec/               /usr/local/libexec/
 
 #
 # Copy the container initialization scripts.
