@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+
+set -euo pipefail
+
+RUST_VERSION=1.79.0
+RUST_PROFILE=default
+
+export CARGO_HOME=/usr/local/cargo
+export RUSTUP_HOME=/usr/local/rustup
+
+sudo mkdir -p ${CARGO_HOME}
+sudo chown ${USERNAME}:${USERNAME} ${CARGO_HOME}
+
+sudo mkdir -p ${RUSTUP_HOME}
+sudo chown ${USERNAME}:${USERNAME} ${RUSTUP_HOME}
+
+sudo apt-get install -y --no-install-recommends \
+    rustup
+
+rustup toolchain install \
+    --no-self-update \
+    --profile ${RUST_PROFILE} \
+    ${RUST_VERSION}
+
+rustup component add \
+  clippy \
+  rust-analyzer \
+  rust-src \
+  rustfmt
