@@ -48,11 +48,43 @@ COPY --chown=${USERNAME}:${USERNAME} home /home/${USERNAME}
 USER ${USER_UID}
 
 #
-# Run the image initialization scripts.
+# Copy our utilities.
 #
-COPY etc/init-image.d/    /usr/local/etc/init-image.d/
+COPY bin/                   /usr/local/bin/
 
-RUN run-parts /usr/local/etc/init-image.d
+#
+# Run the image initialization scripts, layering based
+# on the scripts' initial digit.
+#
+COPY etc/init-image.d/0*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^0'  /usr/local/etc/init-image.d/
+
+COPY etc/init-image.d/1*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^1'  /usr/local/etc/init-image.d/
+
+COPY etc/init-image.d/2*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^2'  /usr/local/etc/init-image.d/
+
+COPY etc/init-image.d/3*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^3'  /usr/local/etc/init-image.d/
+
+COPY etc/init-image.d/4*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^4'  /usr/local/etc/init-image.d/
+
+COPY etc/init-image.d/5*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^5'  /usr/local/etc/init-image.d/
+
+COPY etc/init-image.d/6*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^6'  /usr/local/etc/init-image.d/
+
+COPY etc/init-image.d/7*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^7'  /usr/local/etc/init-image.d/
+
+COPY etc/init-image.d/8*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^8'  /usr/local/etc/init-image.d/
+
+COPY etc/init-image.d/9*    /usr/local/etc/init-image.d/
+RUN run-parts --regex '^9'  /usr/local/etc/init-image.d/
 
 #
 # Clean up APT.
@@ -64,14 +96,9 @@ RUN \
 #
 # Copy the container initialization scripts.
 #
-COPY etc/post-create.d/   /usr/local/etc/post-create.d/
-COPY etc/post-start.d/    /usr/local/etc/post-start.d/
-COPY etc/post-attach.d/   /usr/local/etc/post-attach.d/
-
-#
-# Copy our utilities.
-#
-COPY bin/                 /usr/local/bin
+COPY etc/post-create.d/     /usr/local/etc/post-create.d/
+COPY etc/post-start.d/      /usr/local/etc/post-start.d/
+COPY etc/post-attach.d/     /usr/local/etc/post-attach.d/
 
 #
 # Finally, our entrypoint.
