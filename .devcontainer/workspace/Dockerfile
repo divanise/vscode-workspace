@@ -1,4 +1,4 @@
-FROM ubuntu:noble-20240530
+FROM ubuntu:noble-20240605
 
 ARG USERNAME=vscode
 ARG USER_UID=1001
