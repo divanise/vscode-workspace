@@ -3,6 +3,7 @@ FROM ubuntu:noble-20240530
 ARG USERNAME=vscode
 ARG USER_UID=1001
 ARG USER_GID=${USER_UID}
+ARG USER_SHELL_PACKAGE=zsh
 ARG USER_SHELL=/usr/bin/zsh
 
 #
@@ -24,16 +25,12 @@ SHELL ["/usr/bin/bash", "-e", "-o", "pipefail", "-c"]
 RUN apt-get update
 
 #
-# Run the image initialization scripts.
-#
-COPY etc/init-image.d/    /usr/local/etc/init-image.d/
-
-RUN run-parts /usr/local/etc/init-image.d
-
-#
 # Add a non-root user.
 #
 RUN \
+    #
+    # Install necessary packages
+    apt-get install -y --no-install-recommends sudo ${USER_SHELL_PACKAGE} && \
     #
     # Create the user.
     groupadd --gid ${USER_GID} ${USERNAME} && \
@@ -47,6 +44,13 @@ RUN \
     chmod 0440 /etc/sudoers.d/${USERNAME}
 
 COPY --chown=${USERNAME}:${USERNAME} home /home/${USERNAME}
+
+#
+# Run the image initialization scripts.
+#
+COPY etc/init-image.d/    /usr/local/etc/init-image.d/
+
+RUN run-parts /usr/local/etc/init-image.d
 
 #
 # Run the remainder of the setup as the user.

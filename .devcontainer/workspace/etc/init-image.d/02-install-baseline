@@ -26,15 +26,13 @@ apt-get install -y --no-install-recommends \
     psmisc \
     socklog \
     strace \
-    sudo \
     tcpdump \
     tree \
     tzdata \
     unzip \
     uuid \
     vim \
-    xz-utils \
-    zsh
+    xz-utils
 
 # Install basic development tools.
 apt-get install -y --no-install-recommends \
