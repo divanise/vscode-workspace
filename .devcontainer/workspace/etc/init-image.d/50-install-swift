@@ -7,7 +7,11 @@ pushd "${WORK_DIR}"
 
 SWIFT_VERSION=5.10.1
 
-export SWIFT_HOME=/usr/local/swift
+SWIFT_HOME=/usr/local/swift
+
+cat > /usr/local/etc/environment.d/50-swift <<EOF
+PATH="$SWIFT_HOME/bin:\$PATH"
+EOF
 
 # Based on https://www.swift.org/install/linux/tarball/
 
