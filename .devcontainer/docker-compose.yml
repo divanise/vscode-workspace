@@ -5,7 +5,7 @@ services:
   vscode-workspace:
     image: vscode-workspace
     build:
-      context: .
+      context: ./workspace
       dockerfile: Dockerfile
     volumes:
       - config-data:/home/vscode/.config
