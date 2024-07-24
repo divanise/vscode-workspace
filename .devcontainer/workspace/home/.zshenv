@@ -1,7 +1,7 @@
 ZDOTDIR="$HOME/.config/zsh"
 
-JAVA_HOME=/opt/java/openjdk
-MAVEN_HOME=/opt/java/maven
+JAVA_HOME=/usr/local/share/openjdk
+MAVEN_HOME=/usr/local/share/maven
 
 PATH="$HOME/.cargo/bin:$MAVEN_HOME/bin:$JAVA_HOME/bin:$PATH"
 
