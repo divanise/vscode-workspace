@@ -8,6 +8,13 @@ RUST_PROFILE=default
 export CARGO_HOME=/usr/local/cargo
 export RUSTUP_HOME=/usr/local/rustup
 
+cat > /usr/local/etc/environment.d/40-rust <<EOF
+export CARGO_HOME=$CARGO_HOME
+export RUSTUP_HOME=$RUSTUP_HOME
+
+PATH="$CARGO_HOME/bin:\$PATH"
+EOF
+
 sudo mkdir -p ${CARGO_HOME}
 sudo chown ${USERNAME}:${USERNAME} ${CARGO_HOME}
 
