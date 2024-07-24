@@ -2,8 +2,7 @@
 
 set -euo pipefail
 
-# Install utilities.
-apt-get install -y --no-install-recommends \
+sudo apt-get install -y --no-install-recommends \
     bind9-host \
     bsdextrautils \
     bzip2 \
@@ -26,22 +25,10 @@ apt-get install -y --no-install-recommends \
     psmisc \
     socklog \
     strace \
-    sudo \
     tcpdump \
     tree \
     tzdata \
     unzip \
     uuid \
     vim \
-    xz-utils \
-    zsh
-
-# Install basic development tools.
-apt-get install -y --no-install-recommends \
-    build-essential \
-    gdb \
-    git \
-    libtool \
-    lldb \
-    nasm \
-    pkg-config
+    xz-utils

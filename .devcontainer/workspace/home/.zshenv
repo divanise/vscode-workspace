@@ -1,9 +1,12 @@
 ZDOTDIR="$HOME/.config/zsh"
 
-JAVA_HOME=/opt/java/openjdk
-MAVEN_HOME=/opt/java/maven
+export JAVA_HOME=/usr/local/openjdk
+export MAVEN_HOME=/usr/local/maven
+export CARGO_HOME=/usr/local/cargo
+export RUSTUP_HOME=/usr/local/rustup
+export SWIFT_HOME=/usr/local/swift
 
-PATH="$HOME/.cargo/bin:$MAVEN_HOME/bin:$JAVA_HOME/bin:$PATH"
+PATH="$SWIFT_HOME/bin:$CARGO_HOME/bin:$MAVEN_HOME/bin:$JAVA_HOME/bin:$PATH"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then

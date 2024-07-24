@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+set -euo pipefail
+
+sudo rm -f /etc/timezone /etc/localtime
+sudo ln -sfn /usr/share/zoneinfo/${TZ} /etc/localtime
+echo ${TZ} |  sudo tee /etc/timezone

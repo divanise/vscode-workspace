@@ -1,8 +1,9 @@
-FROM ubuntu:noble-20240530
+FROM ubuntu:noble-20240605
 
 ARG USERNAME=vscode
 ARG USER_UID=1001
 ARG USER_GID=${USER_UID}
+ARG USER_SHELL_PACKAGE=zsh
 ARG USER_SHELL=/usr/bin/zsh
 
 #
@@ -19,16 +20,17 @@ ENV \
 SHELL ["/usr/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 #
-# Run the image initialization scripts.
+# Initialize APT.
 #
-COPY workspace/etc/init-image.d/    /usr/local/etc/init-image.d/
-
-RUN run-parts /usr/local/etc/init-image.d
+RUN apt-get update
 
 #
 # Add a non-root user.
 #
 RUN \
+    #
+    # Install necessary packages
+    apt-get install -y --no-install-recommends sudo ${USER_SHELL_PACKAGE} && \
     #
     # Create the user.
     groupadd --gid ${USER_GID} ${USERNAME} && \
@@ -41,31 +43,35 @@ RUN \
     echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} && \
     chmod 0440 /etc/sudoers.d/${USERNAME}
 
-COPY --chown=${USERNAME}:${USERNAME} workspace/home /home/${USERNAME}
+COPY --chown=${USERNAME}:${USERNAME} home /home/${USERNAME}
 
-#
-# Run the remainder of the setup as the user.
-#
 USER ${USER_UID}
 
 #
-# Run the user initialization scripts.
+# Run the image initialization scripts.
 #
-COPY workspace/etc/init-user.d/     /usr/local/etc/init-user.d/
+COPY etc/init-image.d/    /usr/local/etc/init-image.d/
 
-RUN run-parts /usr/local/etc/init-user.d
+RUN run-parts /usr/local/etc/init-image.d
+
+#
+# Clean up APT.
+#
+RUN \
+    sudo apt-get clean && \
+    sudo rm -rf /var/lib/apt/lists
 
 #
 # Copy the container initialization scripts.
 #
-COPY workspace/etc/post-create.d/   /usr/local/etc/post-create.d/
-COPY workspace/etc/post-start.d/    /usr/local/etc/post-start.d/
-COPY workspace/etc/post-attach.d/   /usr/local/etc/post-attach.d/
+COPY etc/post-create.d/   /usr/local/etc/post-create.d/
+COPY etc/post-start.d/    /usr/local/etc/post-start.d/
+COPY etc/post-attach.d/   /usr/local/etc/post-attach.d/
 
 #
 # Copy our utilities.
 #
-COPY workspace/bin/                 /usr/local/bin
+COPY bin/                 /usr/local/bin
 
 #
 # Finally, our entrypoint.

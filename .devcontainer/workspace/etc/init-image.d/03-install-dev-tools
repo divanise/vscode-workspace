@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+set -euo pipefail
+
+sudo apt-get install -y --no-install-recommends \
+    build-essential \
+    gdb \
+    git \
+    libtool \
+    lldb \
+    nasm \
+    pkg-config
