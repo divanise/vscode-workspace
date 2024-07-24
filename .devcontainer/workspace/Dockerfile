@@ -45,12 +45,22 @@ RUN \
 
 COPY --chown=${USERNAME}:${USERNAME} home /home/${USERNAME}
 
-USER ${USER_UID}
-
 #
 # Copy our utilities.
 #
 COPY bin/                   /usr/local/bin/
+
+#
+# Set up our environment variable directory.
+#
+RUN \
+    mkdir -p /usr/local/etc/environment.d && \
+    chown ${USERNAME}:${USERNAME} /usr/local/etc/environment.d
+
+#
+# Switch to running as the user.
+#
+USER ${USER_UID}
 
 #
 # Run the image initialization scripts, layering based
