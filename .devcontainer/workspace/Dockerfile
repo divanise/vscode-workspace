@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 FROM ubuntu:noble-20240605
 
 ARG USERNAME=vscode
@@ -22,33 +23,36 @@ SHELL ["/usr/bin/bash", "-e", "-o", "pipefail", "-c"]
 #
 # Initialize APT.
 #
-RUN apt-get update
+RUN <<EOT
+    apt-get update
+EOT
 
 #
 # Add a non-root user.
 #
-RUN \
-    #
+RUN <<EOT
     # Install necessary packages
-    apt-get install -y --no-install-recommends sudo ${USER_SHELL_PACKAGE} && \
-    #
+    apt-get install -y --no-install-recommends sudo ${USER_SHELL_PACKAGE}
+
     # Create the user.
-    groupadd --gid ${USER_GID} ${USERNAME} && \
-    useradd --shell ${USER_SHELL} --uid ${USER_UID} --gid ${USER_GID} ${USERNAME} && \
-    mkdir /home/${USERNAME}/{,workspace} && \
-    chmod 0755 /home/${USERNAME}/{,workspace} && \
-    chown ${USERNAME}:${USERNAME} /home/${USERNAME}/{,workspace} && \
-    #
+    groupadd --gid ${USER_GID} ${USERNAME}
+    useradd --shell ${USER_SHELL} --uid ${USER_UID} --gid ${USER_GID} ${USERNAME}
+    mkdir /home/${USERNAME}/{,workspace}
+    chmod 0755 /home/${USERNAME}/{,workspace}
+    chown ${USERNAME}:${USERNAME} /home/${USERNAME}/{,workspace}
+
     # Add the user as a sudoer.
-    echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} && \
+    echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME}
     chmod 0440 /etc/sudoers.d/${USERNAME}
+EOT
 
 #
 # Set up our environment variable directory.
 #
-RUN \
-    mkdir -p /usr/local/etc/environment.d && \
+RUN <<EOT
+    mkdir -p /usr/local/etc/environment.d
     chown ${USERNAME}:${USERNAME} /usr/local/etc/environment.d
+EOT
 
 #
 # Switch to running as the user.
@@ -92,9 +96,11 @@ RUN run-parts --regex '^9'  /usr/local/etc/init-image.d/
 #
 # Clean up APT.
 #
-RUN \
-    sudo apt-get clean && \
+RUN <<EOT
+    sudo apt-get clean
     sudo rm -rf /var/lib/apt/lists
+EOT
+
 #
 # Copy our home directory template.
 #

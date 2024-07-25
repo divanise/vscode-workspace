@@ -2,4 +2,8 @@
 
 set -euo pipefail
 
-cat /usr/local/etc/environment.d/* | tr '\n' ';' | sed s/\;\;/\;/g
+for env_file in /usr/local/etc/environment.d/*; do
+    if [ -f "$env_file" ]; then
+        cat $env_file | tr '\n' ';' | sed s/\;\;\\+/\;/g
+    fi
+done
