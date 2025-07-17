@@ -1,11 +1,9 @@
 # syntax=docker/dockerfile:1.4
-FROM ubuntu:noble-20240605
+FROM ubuntu:noble-20250714
 
 ARG USERNAME=vscode
 ARG USER_UID=1001
 ARG USER_GID=${USER_UID}
-ARG USER_SHELL_PACKAGE=zsh
-ARG USER_SHELL=/usr/bin/zsh
 
 #
 # Set environment variables.
@@ -32,11 +30,11 @@ EOT
 #
 RUN <<EOT
     # Install necessary packages
-    apt-get install -y --no-install-recommends sudo ${USER_SHELL_PACKAGE}
+    apt-get install -y --no-install-recommends sudo zsh
 
     # Create the user.
     groupadd --gid ${USER_GID} ${USERNAME}
-    useradd --shell ${USER_SHELL} --uid ${USER_UID} --gid ${USER_GID} ${USERNAME}
+    useradd --shell /usr/bin/zsh --uid ${USER_UID} --gid ${USER_GID} ${USERNAME}
     mkdir /home/${USERNAME}/{,workspace}
     chmod 0755 /home/${USERNAME}/{,workspace}
     chown ${USERNAME}:${USERNAME} /home/${USERNAME}/{,workspace}
@@ -60,38 +58,16 @@ EOT
 USER ${USER_UID}
 
 #
-# Run the image initialization scripts, layering based
-# on the scripts' initial digit.
+# Copy our utility directories.
 #
-COPY etc/init-image.d/0*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^0'  /usr/local/etc/init-image.d/
+COPY bin/                   /usr/local/bin/
+COPY libexec/               /usr/local/libexec/
 
-COPY etc/init-image.d/1*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^1'  /usr/local/etc/init-image.d/
-
-COPY etc/init-image.d/2*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^2'  /usr/local/etc/init-image.d/
-
-COPY etc/init-image.d/3*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^3'  /usr/local/etc/init-image.d/
-
-COPY etc/init-image.d/4*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^4'  /usr/local/etc/init-image.d/
-
-COPY etc/init-image.d/5*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^5'  /usr/local/etc/init-image.d/
-
-COPY etc/init-image.d/6*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^6'  /usr/local/etc/init-image.d/
-
-COPY etc/init-image.d/7*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^7'  /usr/local/etc/init-image.d/
-
-COPY etc/init-image.d/8*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^8'  /usr/local/etc/init-image.d/
-
-COPY etc/init-image.d/9*    /usr/local/etc/init-image.d/
-RUN run-parts --regex '^9'  /usr/local/etc/init-image.d/
+#
+# Run the image initialization scripts.
+#
+COPY etc/init-image.d/      /usr/local/etc/init-image.d/
+RUN run-parts               /usr/local/etc/init-image.d/
 
 #
 # Clean up APT.
@@ -105,12 +81,6 @@ EOT
 # Copy our home directory template.
 #
 COPY --chown=${USERNAME}:${USERNAME} home /home/${USERNAME}
-
-#
-# Copy our utility directories.
-#
-COPY bin/                   /usr/local/bin/
-COPY libexec/               /usr/local/libexec/
 
 #
 # Copy the container initialization scripts.
