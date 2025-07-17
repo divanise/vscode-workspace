@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM ubuntu:noble-20240605
+FROM ubuntu:noble-20250714
 
 ARG USERNAME=vscode
 ARG USER_UID=1001
