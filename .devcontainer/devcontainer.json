@@ -13,6 +13,10 @@
         "vscode": {
             "settings": {
                 "rust-analyzer.check.command": "clippy",
+                "[java]": {
+                    "editor.defaultFormatter": "Oracle.oracle-java",
+                    "editor.formatOnSave": true
+                },
                 "[rust]": {
                     "editor.defaultFormatter": "rust-lang.rust-analyzer",
                     "editor.formatOnSave": true
@@ -20,13 +24,20 @@
                 "[toml]": {
                     "editor.defaultFormatter": "tamasfe.even-better-toml",
                     "editor.formatOnSave": true
+                },
+                "[xml]": {
+                    "editor.defaultFormatter": "redhat.vscode-xml",
+                    "editor.formatOnSave": true
                 }
             },
 
             "extensions": [
                 "ms-azuretools.vscode-docker",
+                "Oracle.oracle-java",
+                "redhat.vscode-xml",
                 "rust-lang.rust-analyzer",
-                "tamasfe.even-better-toml"
+                "tamasfe.even-better-toml",
+                "vscjava.vscode-maven"
             ]
         }
     },
