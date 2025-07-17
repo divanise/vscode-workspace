@@ -12,10 +12,21 @@
     "customizations": {
         "vscode": {
             "settings": {
+                "rust-analyzer.check.command": "clippy",
+                "[rust]": {
+                    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+                    "editor.formatOnSave": true
+                },
+                "[toml]": {
+                    "editor.defaultFormatter": "tamasfe.even-better-toml",
+                    "editor.formatOnSave": true
+                }
             },
 
             "extensions": [
-                "ms-azuretools.vscode-docker"
+                "ms-azuretools.vscode-docker",
+                "rust-lang.rust-analyzer",
+                "tamasfe.even-better-toml"
             ]
         }
     },
