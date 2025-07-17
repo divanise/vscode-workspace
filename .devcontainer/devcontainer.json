@@ -15,11 +15,7 @@
             },
 
             "extensions": [
-                "ms-azuretools.vscode-docker",
-                "pdconsec.vscode-print",
-                "Oracle.oracle-java",
-                "vscjava.vscode-maven",
-                "redhat.vscode-xml"
+                "ms-azuretools.vscode-docker"
             ]
         }
     },
