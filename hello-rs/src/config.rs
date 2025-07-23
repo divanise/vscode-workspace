@@ -23,12 +23,16 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn path() -> PathBuf {
-        let config_dir = std::env::var("CONFIG_HOME");
-        let cargo_dir = std::env::var("CARGO_MANIFEST_DIR");
-        let root_dir = config_dir.or(cargo_dir).unwrap_or("".to_string());
+    pub fn home() -> PathBuf {
+        let home_dir = std::env::var("WORKSPACE_HOME")
+            .or_else(|_| std::env::var("CARGO_MANIFEST_DIR"))
+            .unwrap_or_else(|_| "".to_string());
 
-        std::path::Path::new(&root_dir).join("config.toml")
+        std::path::Path::new(&home_dir).to_path_buf()
+    }
+
+    pub fn path() -> PathBuf {
+        Self::home().join("config.toml")
     }
 
     pub fn load(path: &Path) -> Result<Self, Box<dyn Error>> {
