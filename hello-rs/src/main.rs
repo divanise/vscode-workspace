@@ -1,10 +1,8 @@
-use axum::Router;
-use axum::routing::get;
 use tokio::net::TcpListener;
 use tokio::signal;
-use tower_http::cors::CorsLayer;
-use tower_http::trace::TraceLayer;
 use tracing::{Level, error, info};
+
+mod routes;
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
@@ -13,10 +11,7 @@ async fn main() -> std::io::Result<()> {
         .init();
 
     let listener = TcpListener::bind("0.0.0.0:8080").await?;
-    let routes = Router::new()
-        .route("/", get(|| async { "Hello, world!" }))
-        .layer(TraceLayer::new_for_http())
-        .layer(CorsLayer::very_permissive());
+    let routes = routes::new();
 
     info!("Server started!");
 
