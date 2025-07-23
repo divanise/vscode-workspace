@@ -5,7 +5,7 @@
         "docker-compose.yml"
     ],
 
-    "service": "vscode-workspace",
+    "service": "workspace",
 
     "workspaceFolder": "/home/vscode/workspace",
 

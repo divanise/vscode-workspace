@@ -1,14 +1,34 @@
 services:
 
-  vscode-workspace:
-    image: vscode-workspace
+  workspace:
+    image: workspace
     build:
       context: ./workspace
       dockerfile: Dockerfile
     volumes:
-      - config-data:/home/vscode/.config
+      - workspace-config:/home/vscode/.config
       - ..:/home/vscode/workspace:cached
       - /var/run/docker.sock:/var/run/docker.sock
+
+  proxy:
+    image: caddy
+    restart: unless-stopped
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./proxy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-config:/config
+      - caddy-data:/data
+    command:
+      [
+        "caddy",
+        "run",
+        "--watch",
+        "--config",
+        "/etc/caddy/Caddyfile",
+        "--adapter",
+        "caddyfile"
+      ]
 
   # Configuration details: https://hub.docker.com/_/postgres
   postgres:
@@ -34,6 +54,8 @@ services:
       - redis-data:/data
 
 volumes:
-  config-data:
+  workspace-config:
+  caddy-config:
+  caddy-data:
   postgres-data:
   redis-data:
