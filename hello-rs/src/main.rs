@@ -1,19 +1,34 @@
 use tokio::net::TcpListener;
 use tokio::signal;
-use tracing::{Level, error, info};
+use tracing::{error, info};
 
+use crate::config::Config;
+
+mod config;
 mod routes;
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
+    let config_path = Config::path();
+    let config = Config::load(&config_path).unwrap_or_else(|_| {
+        panic!(
+            "Failed to load configuration from {}",
+            config_path.display()
+        )
+    });
+
     tracing_subscriber::fmt()
-        .with_max_level(Level::DEBUG)
+        .with_max_level(config.log_level())
         .init();
 
-    let listener = TcpListener::bind("0.0.0.0:8080").await?;
-    let routes = routes::new();
+    info!(
+        "Loaded configuration from {:?}: {:#?}",
+        config_path.display(),
+        config
+    );
 
-    info!("Server started!");
+    let listener = TcpListener::bind(config.http_addr()).await?;
+    let routes = routes::new();
 
     tokio::select! {
         res = axum::serve(listener, routes) => res,
