@@ -1,0 +1,13 @@
+localhost:8443 {
+    redir https://workspace.internal:8443
+}
+
+https://workspace.internal:8443 {
+    log
+    tls internal
+
+    reverse_proxy workspace:8080 {
+        transport http
+        trusted_proxies 0.0.0.0/0
+    }
+}

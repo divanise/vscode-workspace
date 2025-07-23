@@ -5,7 +5,7 @@
         "docker-compose.yml"
     ],
 
-    "service": "vscode-workspace",
+    "service": "workspace",
 
     "workspaceFolder": "/home/vscode/workspace",
 
@@ -13,6 +13,9 @@
         "vscode": {
             "settings": {
                 "rust-analyzer.check.command": "clippy",
+                "[html]": {
+                    "editor.formatOnSave": true
+                },
                 "[java]": {
                     "editor.defaultFormatter": "Oracle.oracle-java",
                     "editor.formatOnSave": true
