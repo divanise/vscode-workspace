@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ -z "$MAVEN_HOME" ]; then
+    echo "MAVEN_HOME is not set"
+    exit 1
+fi
+
+# Add some Maven aliases to behave more like Cargo.
+case "$1" in
+    build)
+        shift 1
+        "$MAVEN_HOME/bin/mvn" compile $@
+        ;;
+
+    run)
+        shift 1
+        "$MAVEN_HOME/bin/mvn" compile exec:exec $@
+        ;;
+
+    *)
+        "$MAVEN_HOME/bin/mvn" $@
+        ;;
+esac
