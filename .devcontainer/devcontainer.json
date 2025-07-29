@@ -13,6 +13,7 @@
         "vscode": {
             "settings": {
                 "rust-analyzer.check.command": "clippy",
+                "xml.format.maxLineWidth": 0,
                 "[html]": {
                     "editor.formatOnSave": true
                 },
