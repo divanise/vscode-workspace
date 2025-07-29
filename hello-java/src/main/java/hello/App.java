@@ -1,12 +1,15 @@
 package hello;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.javalin.Javalin;
 
 public class App {
 
     public static void main(String[] args) throws Exception {
-        Logger logger = LoggerFactory.getLogger(App.class);
-        logger.info("Hello World");
+        Javalin
+                .create(config -> {
+                    config.showJavalinBanner = false;
+                })
+                .get("/", ctx -> ctx.result("Hello World"))
+                .start(8080);
     }
 }
