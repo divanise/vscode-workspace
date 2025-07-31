@@ -27,7 +27,8 @@ async fn main() -> std::io::Result<()> {
         config
     );
 
-    let listener = TcpListener::bind(config.http_addr()).await?;
+    let http_addr = (config.http_host(), config.http_port());
+    let listener = TcpListener::bind(http_addr).await?;
     let routes = routes::new();
 
     tokio::select! {

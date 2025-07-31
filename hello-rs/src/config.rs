@@ -19,7 +19,8 @@ pub enum LogLevel {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Config {
     log_level: LogLevel,
-    http_addr: String,
+    http_host: String,
+    http_port: u16,
 }
 
 impl Config {
@@ -49,8 +50,12 @@ impl Config {
         self.log_level.clone()
     }
 
-    pub fn http_addr(&self) -> String {
-        self.http_addr.clone()
+    pub fn http_host(&self) -> &str {
+        &self.http_host
+    }
+
+    pub fn http_port(&self) -> u16 {
+        self.http_port
     }
 }
 
@@ -70,7 +75,8 @@ impl Default for Config {
     fn default() -> Self {
         Self {
             log_level: LogLevel::Info,
-            http_addr: "0.0.0.0:8080".to_string(),
+            http_host: "0.0.0.0".to_string(),
+            http_port: 8080,
         }
     }
 }
