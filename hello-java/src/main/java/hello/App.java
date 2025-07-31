@@ -9,7 +9,10 @@ public class App {
                 .create(config -> {
                     config.showJavalinBanner = false;
                 })
-                .get("/", ctx -> ctx.result("Hello World"))
+                .get("/", ctx -> {
+                    var loader = ClassLoader.getSystemResourceAsStream("html/index.html");
+                    ctx.writeSeekableStream(loader, "text/html; charset=utf-8");
+                })
                 .start(8080);
     }
 }
