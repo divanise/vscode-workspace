@@ -9,43 +9,6 @@
 
     "workspaceFolder": "/home/vscode/workspace",
 
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "rust-analyzer.check.command": "clippy",
-                "xml.format.maxLineWidth": 0,
-                "[html]": {
-                    "editor.formatOnSave": true
-                },
-                "[java]": {
-                    "editor.defaultFormatter": "Oracle.oracle-java",
-                    "editor.formatOnSave": true
-                },
-                "[rust]": {
-                    "editor.defaultFormatter": "rust-lang.rust-analyzer",
-                    "editor.formatOnSave": true
-                },
-                "[toml]": {
-                    "editor.defaultFormatter": "tamasfe.even-better-toml",
-                    "editor.formatOnSave": true
-                },
-                "[xml]": {
-                    "editor.defaultFormatter": "redhat.vscode-xml",
-                    "editor.formatOnSave": true
-                }
-            },
-
-            "extensions": [
-                "ms-azuretools.vscode-docker",
-                "Oracle.oracle-java",
-                "redhat.vscode-xml",
-                "rust-lang.rust-analyzer",
-                "tamasfe.even-better-toml",
-                "vscjava.vscode-maven"
-            ]
-        }
-    },
-
     "remoteUser": "vscode",
 
     "postCreateCommand": ["run-parts", "/usr/local/etc/post-create.d"],
