@@ -9,6 +9,10 @@
       "path": "hello-java"
     },
     {
+      "name": "Templates",
+      "path": "templates"
+    },
+    {
       "name": "ROOT",
       "path": "."
     }
