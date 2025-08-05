@@ -32,7 +32,7 @@ services:
 
   # Configuration details: https://hub.docker.com/_/postgres
   postgres:
-    image: postgres:16.2
+    image: postgres:17.5
     restart: unless-stopped
     environment:
       PGDATA: /var/lib/postgresql/data
@@ -46,7 +46,7 @@ services:
 
   # Configuration details: https://hub.docker.com/_/redis
   redis:
-    image: redis:7.2.4
+    image: redis:8.2
     restart: unless-stopped
     ports:
       - '6379:6379'
