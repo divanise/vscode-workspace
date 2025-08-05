@@ -1,0 +1,45 @@
+{
+  "folders": [
+    {
+      "name": "Rust",
+      "path": "hello-rs"
+    },
+    {
+      "name": "Java",
+      "path": "hello-java"
+    },
+    {
+      "name": "ROOT",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "rust-analyzer.check.command": "clippy",
+    "xml.format.maxLineWidth": 0,
+    "[java]": {
+      "editor.defaultFormatter": "Oracle.oracle-java"
+    },
+    "[rust]": {
+      "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    },
+    "[toml]": {
+      "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "[xml]": {
+      "editor.defaultFormatter": "redhat.vscode-xml"
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "ms-azuretools.vscode-docker",
+      "oracle.oracle-java",
+      "redhat.vscode-xml",
+      "rust-lang.rust-analyzer",
+      "tamasfe.even-better-toml",
+      "vscjava.vscode-maven"
+    ]
+  }
+}
