@@ -48,7 +48,7 @@ dig +short something.internal AAAA @127.0.0.1
 # 4. Install Proxy Certificate
 
 ```bash
-docker-compose --file .devcontainer/docker-compose.yml cp proxy:/data/caddy/pki/authorities/local/root.crt .devcontainer/proxy/certificates/caddy-proxy.crt
+docker compose cp proxy:/data/caddy/pki/authorities/local/root.crt .devcontainer/proxy/certificates/caddy-proxy.crt
 ```
 
 ```bash
