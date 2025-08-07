@@ -44,6 +44,7 @@
       "rust-lang.rust-analyzer",
       "tamasfe.even-better-toml",
       "vscjava.vscode-maven"
-    ]
+    ],
+    "unwantedRecommendations": ["vscjava.vscode-java-pack"]
   }
 }
