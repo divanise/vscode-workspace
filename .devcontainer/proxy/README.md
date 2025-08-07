@@ -48,9 +48,5 @@ dig +short something.internal AAAA @127.0.0.1
 # 4. Install Proxy Certificate
 
 ```bash
-docker compose cp proxy:/data/caddy/pki/authorities/local/root.crt .devcontainer/proxy/certificates/caddy-proxy.crt
-```
-
-```bash
-security add-trusted-cert -k ~/Library/Keychains/login.keychain-db proxy/certificates/caddy-proxy.crt
+security add-trusted-cert -k ~/Library/Keychains/login.keychain-db proxy/data/caddy/pki/authorities/local/root.crt
 ```
