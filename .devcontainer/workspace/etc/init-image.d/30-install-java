@@ -8,7 +8,8 @@ WORK_DIR="$(mktemp -d)"
 pushd "${WORK_DIR}"
 
 JAVA_HOME=/usr/local/openjdk
-JAVA_VERSION=24.0.1+9
+JAVA_VERSION=24.0.2+12
+JAVA_SHA256_SUM='6f8725d186d05c627176db9c46c732a6ef3ba41d9e9b3775c4727fc8ac642bb2'
 
 cat > /usr/local/etc/environment.d/30-java <<EOF
 export JAVA_HOME=$JAVA_HOME
@@ -16,21 +17,12 @@ export JAVA_HOME=$JAVA_HOME
 PATH="$JAVA_HOME/bin:\$PATH"
 EOF
 
-case "$(uname -m)" in
-    aarch64|arm64)
-        JAVA_SHA256_SUM='a598260e340028d9b2383c23df16aa286769a661bd3bf28a52e8c1a5774b1110'
-        JAVA_ARCH='aarch64'
-        ;;
-    x64|x86_64|amd64)
-        JAVA_SHA256_SUM='78832cb5ea4074f2215cde0d01d6192d09c87636fc24b36647aea61fb23b8272'
-        JAVA_ARCH='x64'
-        ;;
-esac;
-
 JAVA_BINARY_URL="https://github.com/adoptium/temurin24-binaries/releases/download"
 JAVA_BINARY_URL="${JAVA_BINARY_URL}/jdk-$(echo ${JAVA_VERSION} | jq -Rr @uri)"
-JAVA_BINARY_URL="${JAVA_BINARY_URL}/OpenJDK24U-jdk_${JAVA_ARCH}_linux_hotspot"
+JAVA_BINARY_URL="${JAVA_BINARY_URL}/OpenJDK24U-jdk_aarch64_linux_hotspot"
 JAVA_BINARY_URL="${JAVA_BINARY_URL}_$(echo ${JAVA_VERSION} | sed -e 's/+/_/').tar.gz"
+
+echo Downloading OpenJDK ${JAVA_VERSION} from ${JAVA_BINARY_URL}
 
 curl -fsSL ${JAVA_BINARY_URL} --output openjdk.tar.gz
 
