@@ -1,10 +1,10 @@
-mod greeter;
+mod api;
+mod html;
 
 use std::future::Future;
 use std::sync::Arc;
 
 use axum::Router;
-use axum::routing::get;
 use tower_http::cors::CorsLayer;
 use tower_http::trace::TraceLayer;
 
@@ -18,7 +18,8 @@ where
     S: Send + Sync + 'static,
 {
     Router::new()
-        .route("/", get(greeter::greeter))
+        .merge(html::routes())
+        .nest("/api", api::routes())
         .layer(TraceLayer::new_for_http())
         .layer(CorsLayer::very_permissive())
         .with_state(Arc::new(services))
