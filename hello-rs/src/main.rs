@@ -1,11 +1,13 @@
+mod config;
+mod routes;
+mod services;
+
 use tokio::net::TcpListener;
 use tokio::signal;
 use tracing::{error, info};
 
-use crate::config::Config;
-
-mod config;
-mod routes;
+use config::Config;
+use services::Services;
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
@@ -29,7 +31,7 @@ async fn main() -> std::io::Result<()> {
 
     let http_addr = (config.http_host(), config.http_port());
     let listener = TcpListener::bind(http_addr).await?;
-    let routes = routes::new();
+    let routes = routes::new(Services::new());
 
     tokio::select! {
         res = axum::serve(listener, routes) => res,
