@@ -50,10 +50,11 @@ public class App {
                     });
                 })
                 .get("/", ctx -> {
-                    var name = Objects.requireNonNullElse(ctx.queryParam("name"), "World");
+                    var name = Objects.requireNonNullElse(ctx.queryParam("name"), "world");
+                    var greeting = "Hello, " + name + "!";
 
                     ctx.header("content-type", "text/html; charset=utf-8");
-                    ctx.render("greeter.html", Map.of("name", name));
+                    ctx.render("greeter.html", Map.of("greeting", greeting));
                 })
                 .start();
     }

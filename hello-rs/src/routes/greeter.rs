@@ -13,10 +13,13 @@ pub async fn greeter(Query(GreeterArgs { name }): Query<GreeterArgs>) -> impl In
     #[derive(Template, WebTemplate)]
     #[template(path = "greeter.html")]
     struct GreeterTemplate {
-        name: String,
+        greeting: String,
     }
 
     GreeterTemplate {
-        name: name.unwrap_or("World".to_string()),
+        greeting: match name {
+            Some(name) => format!("Hello, {}!", name),
+            None => "Hello, world!".to_string(),
+        },
     }
 }
