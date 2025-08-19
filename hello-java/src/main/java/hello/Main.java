@@ -2,8 +2,6 @@ package hello;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -16,7 +14,7 @@ import com.hubspot.jinjava.Jinjava;
 
 import io.javalin.Javalin;
 
-public class App {
+public class Main {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -37,26 +35,30 @@ public class App {
 
         LOGGER.info("Loaded configuration: {}", config);
 
-        Javalin
-                .create(javalinConfig -> {
-                    javalinConfig.showJavalinBanner = false;
-                    javalinConfig.useVirtualThreads = true;
+        var services = new DefaultServices();
 
-                    javalinConfig.jetty.defaultHost = config.httpHost();
-                    javalinConfig.jetty.defaultPort = config.httpPort();
+        LOGGER.debug("Initialized services...");
 
-                    javalinConfig.fileRenderer((filePath, model, ctx) -> {
-                        return JINJAVA.render(locateTemplate(filePath), model);
-                    });
-                })
-                .get("/", ctx -> {
-                    var name = Objects.requireNonNullElse(ctx.queryParam("name"), "world");
-                    var greeting = "Hello, " + name + "!";
+        var server = Javalin.create(javalinConfig -> {
+            javalinConfig.showJavalinBanner = false;
+            javalinConfig.useVirtualThreads = true;
 
-                    ctx.header("content-type", "text/html; charset=utf-8");
-                    ctx.render("greeter.html", Map.of("greeting", greeting));
-                })
-                .start();
+            javalinConfig.jetty.defaultHost = config.httpHost();
+            javalinConfig.jetty.defaultPort = config.httpPort();
+
+            javalinConfig.fileRenderer((filePath, model, ctx) -> {
+                return JINJAVA.render(locateTemplate(filePath), model);
+            });
+
+            javalinConfig.router.apiBuilder(() -> {
+                Api.routes(services);
+                Html.routes(services);
+            });
+        });
+
+        LOGGER.debug("Initialized HTTP server...");
+
+        server.start();
     }
 
     private static String locateTemplate(String name) {
