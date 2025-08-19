@@ -118,7 +118,7 @@
             <arguments>
               <argument>-classpath</argument>
               <classpath />
-              <argument>hello.App</argument>
+              <argument>hello.Main</argument>
             </arguments>
           </configuration>
         </plugin>

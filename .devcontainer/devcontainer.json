@@ -1,15 +1,23 @@
 {
-    "name": "VSCode Workspace",
+  "name": "VSCode Workspace",
 
-    "dockerComposeFile": "compose.yaml",
+  "dockerComposeFile": "compose.yaml",
 
-    "service": "workspace",
+  "service": "workspace",
 
-    "workspaceFolder": "/home/vscode/workspace",
+  "workspaceFolder": "/home/vscode/workspace",
 
-    "remoteUser": "vscode",
+  "remoteUser": "vscode",
 
-    "postCreateCommand": ["run-parts", "/usr/local/etc/post-create.d"],
-    "postStartCommand":  ["run-parts", "/usr/local/etc/post-start.d"],
-    "postAttachCommand": ["run-parts", "/usr/local/etc/post-attach.d"]
+  "postCreateCommand": ["run-parts", "/usr/local/etc/post-create.d"],
+  "postStartCommand": ["run-parts", "/usr/local/etc/post-start.d"],
+  "postAttachCommand": ["run-parts", "/usr/local/etc/post-attach.d"],
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "remote.autoForwardPorts": false
+      }
+    }
+  }
 }

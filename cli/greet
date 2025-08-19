@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -euo pipefail
+
+if [ $# -gt 0 ]; then
+    NAME_JSON=$(jq \
+        --null-input \
+        '{ name: $ARGS.positional | join(" ") }' \
+        --args \
+        $@ \
+    )
+else
+    NAME_JSON='{}'
+fi
+
+GREETING_JSON=$(curl \
+    --silent \
+    --fail-with-body \
+    --request POST \
+    --header "Content-Type: application/json" \
+    --data "$NAME_JSON" \
+    https://workspace.internal:8443/api/v1/greet \
+)
+
+echo $GREETING_JSON | jq \
+    --raw-output \
+    .greeting
